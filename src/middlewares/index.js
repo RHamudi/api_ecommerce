@@ -8,7 +8,7 @@ const middlewares = {
     if (!token) return res.status(401).json({ msg: "Acesso negado!" });
 
     try {
-      const secret = process.env.SECRET;
+      const secret = "kasKDKSADJKJ@J3329183i3m34,321.231jd78s";
       jwt.verify(token, secret);
       next();
     } catch (error) {

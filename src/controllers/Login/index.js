@@ -14,7 +14,7 @@ const LoginController = {
     const checkPassword = await bcrypt.compare(password, user.password);
     if (!checkPassword) return res.status(422).json({ erro: "senha Invalida" });
     try {
-      const secret = process.env.SECRET;
+      const secret = "kasKDKSADJKJ@J3329183i3m34,321.231jd78s";
 
       const token = jwt.sign({ id: user.id }, secret, { expiresIn: 1800 });
       return res.status(200).json({
