@@ -9,9 +9,9 @@ const routes = require("./routes/index");
 // middleware
 app.use(cors());
 app.use(express.json());
-app.use(routes);
 
 // Routes
+app.use(routes);
 
 // start server and connecting to database
 app.listen(8081, () => {
