@@ -13,8 +13,9 @@ app.use(express.json());
 // Routes
 app.use(routes);
 
+const port = process.env.PORT || 3000;
 // start server and connecting to database
-app.listen(8081, () => {
+app.listen(port, () => {
   mongoose.connect(process.env.MONGO_URL).then(() => {
     console.log("Server is running and connected to database");
   });

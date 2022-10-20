@@ -8,6 +8,10 @@ const { authenticate } = require("../middlewares/index");
 
 const routes = Router();
 
+routes.get("/", (req, res) => {
+  res.send({ msg: "testando" });
+});
+
 routes.post("/create/user", UserController.createUser);
 routes.get("/list/users", UserController.getUsers);
 
