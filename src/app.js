@@ -11,9 +11,6 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/", (req, res) => {
-  res.send(json({ test: "testando" }));
-});
 app.use(routes);
 
 const port = process.env.PORT || 3000;
