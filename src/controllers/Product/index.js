@@ -21,7 +21,7 @@ const ProductController = {
       const productsOfAnUser = await Product.find({ username: user_id });
       return res.status(200).json(productsOfAnUser);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ erro: "Produto de usuario não encontrado" });
     }
   },
   // atualizando produto
@@ -29,6 +29,19 @@ const ProductController = {
     const bodyData = req.body;
     const { product_id, user_id } = req.params;
 
+    // Verificando se o id do produto está certo
+    try {
+      const product = await Product.findById(product_id);
+    } catch (error) {
+      return res.status(400).json({ erro: "Não existe produto com esse id" });
+    }
+
+    // verificando permissão de usuario
+    const productOne = await Product.findById(product_id);
+    if (productOne.username != user_id)
+      return res.status(404).json({
+        erro: "Voce não tem acesso para alterar esse produto, insira um usuario valido",
+      });
     try {
       const updatedProduct = await Product.findByIdAndUpdate(product_id, bodyData, {
         new: true,
@@ -42,11 +55,24 @@ const ProductController = {
   async deleteProduct(req, res) {
     const { product_id, user_id } = req.params;
 
+    // verificando permissão de usuario
+    const productOne = await Product.findById(product_id);
+    if (productOne) {
+      if (productOne.username != user_id)
+        return res.status(404).json({
+          erro: "Voce não tem acesso para deletar esse produto",
+        });
+    } else {
+      return res.status(400).json({ erro: "Esse produto não existe" });
+    }
+
     try {
       const deletedProduct = await Product.findByIdAndDelete(product_id);
-      return res.status(200).json(deletedProduct);
+      return res
+        .status(200)
+        .json({ product: deletedProduct.username, msg: "Produto deletado com sucesso!" });
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ erro: "Aconteceu algum erro inesperado" });
     }
   },
   // pegando todos os produtos
@@ -65,7 +91,7 @@ const ProductController = {
       const product = await Product.findById(product_id);
       return res.status(200).json(product);
     } catch (error) {
-      return res.status(400).json(error);
+      return res.status(400).json({ erro: "Produto não encontrado!" });
     }
   },
 };
