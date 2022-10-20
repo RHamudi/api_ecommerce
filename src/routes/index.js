@@ -32,7 +32,7 @@ routes.get("/list/products", ProductController.getProducts);
 routes.get("/list/productid/:product_id", ProductController.getProductById);
 
 routes.post("/create/cart/:user_id", authenticate, CartController.createCart);
-routes.get("/list/cartuser/:user_id", authenticate, CartController.getUserCart);
+routes.get("/cartuser/:user_id", authenticate, CartController.getUserCart);
 routes.get("/cart/:user_id/:cart_id", authenticate, CartController.getCart);
 
 module.exports = routes;
