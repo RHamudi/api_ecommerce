@@ -1,13 +1,19 @@
+const jwt = require("jsonwebtoken");
+
 const middlewares = {
   authenticate(req, res, next) {
-    const { authentication } = req.headers;
-    const { user_id } = req.params;
+    const authHeader = req.headers["authorization"];
+    const token = authHeader && authHeader.split(" ")[1];
 
-    if (!authentication) return res.status(400).json({ error: "Token invalido" });
-    if (authentication !== user_id)
-      return res.status(400).json({ error: "Acesso negado!" });
+    if (!token) return res.status(401).json({ msg: "Acesso negado!" });
 
-    next();
+    try {
+      const secret = process.env.SECRET;
+      jwt.verify(token, secret);
+      next();
+    } catch (error) {
+      return res.status(400).json({ msg: "Token inválido!" });
+    }
   },
 };
 
