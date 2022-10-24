@@ -1,0 +1,893 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Ecommerce",
+    "description": "API Ecommerce by Ramon Ramos",
+    "contact": {
+      "email": "ramonramos.silva19@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Github developer",
+    "url": "https://github.com/RHamudi"
+  },
+  "servers": [
+    {
+      "url": "https://ecommerce-api-rest-back.herokuapp.com"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "all information about users"
+    },
+    {
+      "name": "product",
+      "description": "all information about products"
+    },
+    {
+      "name": "cart",
+      "description": "all information about carts"
+    }
+  ],
+  "paths": {
+    "/create/user": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "operationId": "createUser",
+        "requestBody": {
+          "description": "create user in database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "example": "Usuario criado com sucesso"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Incorrect request syntax",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "username": {
+                      "type": "string",
+                      "example": "O nome é obrigatorio"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "O email é obrigatorio"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "a senha é obrigatoria"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/list/users": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Create user",
+        "description": "List all users in database",
+        "operationId": "listUsers",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "id": {
+                        "type": "string",
+                        "example": "838721636172bcs213"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "joao pedro"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "example@gmail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/list/usersid/{iduser}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "list user by id",
+        "description": "returns all user information",
+        "operationId": "getUserById",
+        "parameters": [
+          {
+            "name": "iduser",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "example": "user id"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "name"
+                    },
+                    "email": {
+                      "type": "string",
+                      "example": "email@email.com"
+                    },
+                    "password": {
+                      "type": "string",
+                      "example": "passwordhash"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "user"
+        ],
+        "summary": "login user",
+        "operationId": "loginUser",
+        "requestBody": {
+          "description": "login with email and password",
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "example": "email@email.com"
+                  },
+                  "password": {
+                    "type": "string",
+                    "example": "password"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "msg": {
+                      "type": "string",
+                      "example": "autenticação realizada com sucesso"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "name"
+                    },
+                    "id": {
+                      "type": "string",
+                      "example": "user id"
+                    },
+                    "token": {
+                      "type": "string",
+                      "example": "jwt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string",
+                      "example": "Usuario não encontrado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "erro": {
+                      "type": "string",
+                      "example": "Senha invalida"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/create/product/{iduser}": {
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "create",
+        "description": "create user in database",
+        "operationId": "createProduct",
+        "parameters": [
+          {
+            "name": "iduser",
+            "in": "path",
+            "description": "user id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "string"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "description": "create user in database",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productName": {
+                    "type": "string",
+                    "example": "product name"
+                  },
+                  "productDescription": {
+                    "type": "string",
+                    "example": "product description"
+                  },
+                  "productPrice": {
+                    "type": "number",
+                    "example": 1000
+                  },
+                  "productQuantity": {
+                    "type": "number",
+                    "example": 10
+                  },
+                  "productImage": {
+                    "type": "string",
+                    "example": "image url"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "product create",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "productName": {
+                      "type": "string",
+                      "example": "name of product"
+                    },
+                    "productDescription": {
+                      "type": "string",
+                      "example": "description of product"
+                    },
+                    "productPrice": {
+                      "type": "string",
+                      "example": "price of product"
+                    },
+                    "productQuantity": {
+                      "type": "string",
+                      "example": 10
+                    },
+                    "productImage": {
+                      "type": "string",
+                      "example": "image url"
+                    },
+                    "username": {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "string",
+                          "example": "user id"
+                        },
+                        "username": {
+                          "type": "string",
+                          "example": "username"
+                        },
+                        "email": {
+                          "type": "string",
+                          "example": "email@email.com"
+                        },
+                        "password": {
+                          "type": "string",
+                          "example": "password encrypted"
+                        }
+                      }
+                    },
+                    "_id": {
+                      "type": "string",
+                      "example": "product id"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "You do not have necessary permissions for the resource"
+          }
+        }
+      }
+    },
+    "/update/product/{userid}/{idproduct}": {
+      "patch": {
+        "tags": [
+          "product"
+        ],
+        "summary": "update item of product",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "description": "check user id in database",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          },
+          {
+            "name": "idproduct",
+            "in": "path",
+            "description": "product id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "idproduct"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productName": {
+                    "type": "string",
+                    "example": "name of product"
+                  },
+                  "productDescription": {
+                    "type": "string",
+                    "example": "description of product"
+                  },
+                  "productPrice": {
+                    "type": "string",
+                    "example": "price of product"
+                  },
+                  "productQuantity": {
+                    "type": "string",
+                    "example": 10
+                  },
+                  "productImage": {
+                    "type": "string",
+                    "example": "image url"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully updated"
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/list/products": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "list all products",
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "id"
+                      },
+                      "productName": {
+                        "type": "string",
+                        "example": "name"
+                      },
+                      "productDescription": {
+                        "type": "string",
+                        "example": "description"
+                      },
+                      "productPrice": {
+                        "type": "number",
+                        "example": 1000
+                      },
+                      "productQuantity": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "productImage": {
+                        "type": "string",
+                        "example": "url image"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "user id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/list/productid/{idproduct}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "list product by id",
+        "operationId": "productListById",
+        "parameters": [
+          {
+            "name": "idproduct",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "product id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "string",
+                      "example": "product id"
+                    },
+                    "productName": {
+                      "type": "string",
+                      "example": "product name"
+                    },
+                    "productDescription": {
+                      "type": "string",
+                      "example": "product description"
+                    },
+                    "productPrice": {
+                      "type": "number",
+                      "example": 1000
+                    },
+                    "productQuantity": {
+                      "type": "number",
+                      "example": 10
+                    },
+                    "productImage": {
+                      "type": "string",
+                      "example": "url image"
+                    },
+                    "username": {
+                      "type": "string",
+                      "example": "user id"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/list/productuser/{userid}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "list all user product by id",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "aplication/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "_id": {
+                        "type": "string",
+                        "example": "product id"
+                      },
+                      "productName": {
+                        "type": "string",
+                        "example": "product name"
+                      },
+                      "productDescription": {
+                        "type": "string",
+                        "example": "product description"
+                      },
+                      "productPrice": {
+                        "type": "number",
+                        "example": 1000
+                      },
+                      "productQuantity": {
+                        "type": "number",
+                        "example": 10
+                      },
+                      "productImage": {
+                        "type": "string",
+                        "example": "url image"
+                      },
+                      "username": {
+                        "type": "string",
+                        "example": "user id"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/delete/product/{userid}/{productid}": {
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "delete product",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          },
+          {
+            "name": "productid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "productid"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/create/cart/{userid}": {
+      "post": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "create cart for user",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "aplication/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "properties": {
+                    "products": {
+                      "type": "array",
+                      "example": [
+                        "product id",
+                        "product id"
+                      ]
+                    },
+                    "address": {
+                      "type": "object",
+                      "example": {
+                        "street": "road",
+                        "number": 7,
+                        "city": "city"
+                      }
+                    },
+                    "payment": {
+                      "type": "object",
+                      "example": {
+                        "card": {
+                          "number": "card number"
+                        },
+                        "cvc": 123
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/list/cartuser/{userid}": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "list all user carts",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    },
+    "/cart/{userid}/{productid}": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "return a cart",
+        "parameters": [
+          {
+            "name": "userid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "userid"
+            }
+          },
+          {
+            "name": "productid",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "productid"
+            }
+          },
+          {
+            "name": "token authorization",
+            "in": "header",
+            "description": "jwt token",
+            "schema": {
+              "type": "string",
+              "format": "bearer token"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "bad request"
+          }
+        }
+      }
+    }
+  }
+}
