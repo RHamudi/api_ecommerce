@@ -1,8 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const swaggerUI = require("swagger-ui-express");
-const swaggerFile = require("./swagger.json");
 
 require("dotenv").config();
 const app = express();
@@ -14,7 +12,6 @@ app.use(express.json());
 
 // Routes
 app.use(routes);
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 const port = process.env.PORT || 3000;
 // start server and connecting to database

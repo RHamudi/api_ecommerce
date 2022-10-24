@@ -3,10 +3,14 @@ const UserController = require("../controllers/User/index");
 const LoginController = require("../controllers/Login/index");
 const ProductController = require("../controllers/Product/index");
 const CartController = require("../controllers/Cart/index");
+const swaggerUI = require("swagger-ui-express");
+const swaggerFile = require("../swagger.json");
 
 const { authenticate } = require("../middlewares/index");
 
 const routes = Router();
+
+routes.get("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 
 routes.post("/create/user", UserController.createUser);
 routes.get("/list/users", UserController.getUsers);
