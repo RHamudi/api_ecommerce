@@ -14,6 +14,7 @@ routes.get("/list/users", UserController.getUsers);
 routes.get("/list/usersid/:user_id", UserController.getUserById);
 
 routes.post("/login", LoginController.createSession);
+routes.post("/verify/user", authenticate, LoginController.verifyUser);
 
 routes.post("/create/product/:user_id", authenticate, ProductController.createProduct);
 routes.get("/list/productsuser/:user_id", ProductController.getUserProducts);

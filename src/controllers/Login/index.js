@@ -27,6 +27,9 @@ const LoginController = {
       return res.status(400).json(error);
     }
   },
+  async verifyUser(req, res) {
+    res.status(200).json({ msg: "Usuario autenticado!" });
+  },
 };
 
 module.exports = LoginController;
