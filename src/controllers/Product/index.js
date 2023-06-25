@@ -11,7 +11,7 @@ const ProductController = {
       const file = req.file;
 
       const picture = new Picture({
-        name: user_id,
+        name,
         src: file.path,
       })
 
