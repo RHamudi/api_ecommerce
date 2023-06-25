@@ -17,7 +17,7 @@ app.use(express.json());
 // Routes
 app.use(routes);
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 // start server and connecting to database
 app.listen(port, () => {
   mongoose

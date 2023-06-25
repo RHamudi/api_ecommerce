@@ -18,7 +18,8 @@ const Schema = new mongoose.Schema({
     required: true,
   },
   productImage: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Picture",
     required: true,
   },
   username: {

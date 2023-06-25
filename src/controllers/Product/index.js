@@ -1,3 +1,4 @@
+const Picture = require("../../models/Picture");
 const Product = require("../../models/Product");
 
 const ProductController = {
@@ -7,6 +8,15 @@ const ProductController = {
     const { user_id } = req.params;
 
     try {
+      const file = req.file;
+
+      const picture = new Picture({
+        name: user_id,
+        src: file.path,
+      })
+
+      await picture.save();
+
       const newProduct = await Product.create({ ...bodyData, username: user_id });
       await newProduct.populate("username");
       return res.status(200).send(newProduct);
