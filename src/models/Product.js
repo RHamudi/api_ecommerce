@@ -21,6 +21,10 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  imageHash: {
+    type: String,
+    required: true
+  },
   username: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

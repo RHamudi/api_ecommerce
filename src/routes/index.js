@@ -18,7 +18,8 @@ routes.get("/list/usersid/:user_id", UserController.getUserById);
 routes.post("/login", LoginController.createSession);
 routes.post("/verify/user", authenticate, LoginController.verifyUser);
 
-routes.post("/create/product/:user_id", authenticate, upload.single("file"), ProductController.createProduct);
+routes.post("/create/picture", upload.single("file"), ProductController.Picture);
+routes.post("/create/product/:user_id", authenticate, ProductController.createProduct);
 routes.get("/list/productsuser/:user_id", ProductController.getUserProducts);
 routes.patch(
   "/update/product/:user_id/:product_id",

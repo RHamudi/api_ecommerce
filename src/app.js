@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const fileUpload = require("express-fileupload");
 
 const swaggerUI = require("swagger-ui-express");
 const swaggerFile = require("./swagger.json");
@@ -9,6 +10,7 @@ require("dotenv").config();
 const app = express();
 const routes = require("./routes/index");
 
+app.use(fileUpload());
 app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerFile));
 // middleware
 app.use(cors());
