@@ -27,7 +27,7 @@ routes.patch(
   ProductController.updateProduct
 );
 routes.delete(
-  "/delete/product/:user_id/:product_id",
+  "/delete/product/:user_id/:product_id/:imageName",
   authenticate,
   ProductController.deleteProduct
 );
