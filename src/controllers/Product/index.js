@@ -39,7 +39,9 @@ const ProductController = {
             productQuantity,
             productImage: response.data.link,
             imageHash: response.data.deletehash,
+            imageName: image.name,
             username: user_id,
+            productAccess: 0
           })
           newProduct.save();
           newProduct.populate('username');
@@ -93,6 +95,14 @@ const ProductController = {
         erro: "Voce não tem acesso para alterar esse produto, insira um usuario valido",
       });
     try {
+
+      if(!req.files){
+        return res.status(400).send('Voce não enviou imagens')
+      }
+
+      let image = req.files.file;
+      let uploadPath = __dirname + '/uploads/' + image.name;
+
       const updatedProduct = await Product.findByIdAndUpdate(product_id, bodyData, {
         new: true,
       });
@@ -103,7 +113,11 @@ const ProductController = {
   },
   // deletando produto
   async deleteProduct(req, res) {
-    const { product_id, user_id } = req.params;
+    const { product_id, user_id, imageName } = req.params;
+
+    let path = __dirname + '/uploads/' + imageName;
+    
+    await fs.unlinkSync(path);
 
     // verificando permissão de usuario
     const productOne = await Product.findById(product_id);
@@ -140,6 +154,8 @@ const ProductController = {
     const { product_id } = req.params;
     try {
       const product = await Product.findById(product_id);
+      product.productAccess++;
+      await product.save();
       return res.status(200).json(product);
     } catch (error) {
       return res.status(400).json({ erro: "Produto não encontrado!" });
