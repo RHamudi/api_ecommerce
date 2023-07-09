@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const Schema = new mongoose.Schema({
+  productAccess: {
+    type: Number,
+    required: true
+  },
   productName: {
     type: String,
     required: true,
@@ -18,6 +22,10 @@ const Schema = new mongoose.Schema({
     required: true,
   },
   productImage: {
+    type: String,
+    required: true,
+  },
+  imageName: {
     type: String,
     required: true,
   },
